@@ -14,9 +14,7 @@
         var adjHt;
         var rtWidth;
         var ltWidth;
-
-
-
+        var effectime = 400;
     return this.each(function() {
     selector = $(this);             //Main Slider Selector
     selector.wrap('<div class="slider-wrapper" style="position:relative; width:100%;"></div>'); //Create Wrapper for the entire Slider
@@ -76,7 +74,7 @@
 //The slide Looper
 function loop(){
           infiniteLoop = setInterval(function(){
-                selector.find('.slide-item').eq(currentItem).removeClass('current-slide').fadeOut();
+                selector.find('.slide-item').eq(currentItem).removeClass('current-slide').fadeOut(effectime);
                 disappear();
                 pager.eq(currentItem).removeClass("active");
                 if(currentItem == numberOfItems -1){
@@ -84,7 +82,7 @@ function loop(){
                 }else{
                     currentItem++;
                 }
-                selector.find('.slide-item').eq(currentItem).addClass('current-slide').fadeIn();
+                selector.find('.slide-item').eq(currentItem).addClass('current-slide').fadeIn(effectime);
                 adjustHeight();
                 appear();
                 pager.eq(currentItem).addClass("active");
@@ -93,14 +91,14 @@ function loop(){
 }//loop
 
 function appear(){
-   $('.current-slide .cnt-right .cntnr-content').animate({left : '0'});
-   $('.current-slide .cnt-left .cntnr-content').animate({right : '0'});
+   $('.current-slide .cnt-right .cntnr-content').animate({left : '0'},effectime);
+   $('.current-slide .cnt-left .cntnr-content').animate({right : '0'},effectime);
 
 }
 
 function disappear(){
-   $('.cnt-right .cntnr-content').animate({left : '-200%'});
-   $('.cnt-left .cntnr-content').animate({right : '-200%'});
+   $('.cnt-right .cntnr-content').animate({left : '-200%'},effectime);
+   $('.cnt-left .cntnr-content').animate({right : '-200%'},effectime);
 
 }
 
