@@ -38,6 +38,13 @@
               $('.slidepagers').append('<a href="'+'#slide-'+i+'" class="slidepage">'+i+'</a>');
             }
             pager =$('.slidepage');
+             $('.slide-item').children().each(function(i,elem){
+                $(this).addClass('side');
+                $('.side:first-child').addClass('cnt-left');
+                $('.side:last-child').addClass('cnt-right');
+             });
+             $('.side').wrapInner('<div class="cntnr-content"></div>');
+
             selector.find('.slide-item').eq(0).addClass('current-slide').css({'display' : 'block'});
             $('.current-slide .cnt-right .cntnr-content').css({'left' : '0'});
             $('.current-slide .cnt-left .cntnr-content').css({'right' : '0'});
