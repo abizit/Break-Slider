@@ -60,9 +60,9 @@
 //The slide Looper
 function loop(){
           infiniteLoop = setInterval(function(){
-                selector.find('.slide-item').eq(currentItem).removeClass('current-slide').fadeOut('10');
+                selector.find('.slide-item').eq(currentItem).removeClass('current-slide').fadeOut();
                 disappear();
-                 pager.eq(currentItem).removeClass("active");
+                pager.eq(currentItem).removeClass("active");
                 if(currentItem == numberOfItems -1){
                     currentItem = 0;
                 }else{
@@ -72,8 +72,7 @@ function loop(){
                 adjustHeight();
                 appear();
                 pager.eq(currentItem).addClass("active");
-                
- 
+            
             }, variables.pause);
 }//loop
 
@@ -110,15 +109,20 @@ function prevNextControl(){
       $('.slide-next').click(function(){
         var firstSlide = $('.slide-item:first');
          activepager = $('.slidepage.active'); 
+         disappear();
        if($('.slide-item:last').hasClass('current-slide')){
-          $('.slide-item:last').removeClass('current-slide').css({'display' : 'none'});
-            firstSlide.addClass('current-slide').addClass(variables.effect).css({'display' : 'block'});
+          $('.slide-item:last').removeClass('current-slide').fadeOut();
+
+            firstSlide.addClass('current-slide').fadeIn();
+            adjustHeight();
+            appear();
             activepager.removeClass('active').next().addClass('active');
 
         } else {
 
-          $('.current-slide').removeClass('current-slide').css({'display' : 'none'}).next().addClass('current-slide').css({'display' : 'block'});
-              
+          $('.current-slide').removeClass('current-slide').fadeOut().next().addClass('current-slide').fadeIn();
+            adjustHeight();
+            appear();
             activepager.removeClass('active').next().addClass('active');
         }
       clearInterval(infiniteLoop);
@@ -126,11 +130,16 @@ function prevNextControl(){
       });
       $('.slide-prev').click(function(){
         var lastSlide = $('.slide-item:last');
+        disappear();
           if($('.slide-item:first').hasClass('current-slide')){
-            $('.slide-item:first').removeClass(variables.effect).removeClass('current-slide animated').css({'display' : 'none'});
-            lastSlide.addClass('current-slide animated').addClass(variables.effect).css({'display' : 'block'});
+            $('.slide-item:first').removeClass('current-slide').fadeOut();
+            lastSlide.addClass('current-slide').fadeIn();
+            adjustHeight();
+            appear();
           } else {
-          $('.current-slide').removeClass(variables.effect).removeClass('current-slide animated').css({'display' : 'none'}).prev().addClass('current-slide animated').addClass(variables.effect).css({'display' : 'block'});
+          $('.current-slide').removeClass('current-slide').fadeOut().prev().addClass('current-slide').fadeIn();
+          adjustHeight();
+            appear();
         }
           clearInterval(infiniteLoop);
           return false;
