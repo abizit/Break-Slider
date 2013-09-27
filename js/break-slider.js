@@ -1,3 +1,14 @@
+/*
+* Copyright 2013, Abhijeet Bajracharya
+* Written at 27th September 2013
+*
+* https://twitter.com/_Abizit_
+* abhijeetbajracharya@gmail.com
+* https://github.com/abizit
+*
+* Released under the WTFPL license - http://sam.zoy.org/wtfpl/
+*/
+
 (function($) {
   $.fn.abSlider = function(options) {
     var defaults = {

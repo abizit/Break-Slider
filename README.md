@@ -1,3 +1,3 @@
-<h3>License</h3>
-Animate Slider is licensed under the MIT license. (http://opensource.org/licenses/MIT)
+<h1>License</h1>
+This Slider is Released under the WTFPL license - http://sam.zoy.org/wtfpl/
 
