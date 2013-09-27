@@ -12,15 +12,18 @@
         var pager;
         var activepager;
         var adjHt;
+        var rtWidth;
+        var ltWidth;
+
 
 
     return this.each(function() {
     selector = $(this);             //Main Slider Selector
-    selector.wrap('<div class="slider-wrapper"></div>'); //Create Wrapper for the entire Slider
+    selector.wrap('<div class="slider-wrapper" style="position:relative; width:100%;"></div>'); //Create Wrapper for the entire Slider
 
     selector.children().each(function(i, elem){
       var j =i+1;
-              $(this).attr('id', 'slide-' + j).addClass('slide-item').css({'display' : 'none'});
+              $(this).attr('id', 'slide-' + j).addClass('slide-item').css({'display' : 'none' , 'position' : 'absolute', 'width' : '100%'});
               
             });//assign ID to each slide            
 
@@ -39,18 +42,24 @@
             }
             pager =$('.slidepage');
              $('.slide-item').children().each(function(i,elem){
-                $(this).addClass('side');
+                $(this).addClass('side').css({'float': 'left',
+                    'height' : '100%',
+                    'overflow' : 'hidden',
+                    'position' : 'relative'
+                  });
                 $('.side:first-child').addClass('cnt-left');
                 $('.side:last-child').addClass('cnt-right');
              });
-             $('.side').wrapInner('<div class="cntnr-content"></div>');
-
+                      
+            $('.side').wrapInner('<div class="cntnr-content" style="position: relative;width: 100%; height: 100%;"></div>');
+            $('.cnt-right .cntnr-content').css({'left':'-200%'});
+             $('.cnt-left .cntnr-content').css({'right':'200%'});
             selector.find('.slide-item').eq(0).addClass('current-slide').css({'display' : 'block'});
             $('.current-slide .cnt-right .cntnr-content').css({'left' : '0'});
             $('.current-slide .cnt-left .cntnr-content').css({'right' : '0'});
             $(pager).eq(0).addClass("active");
             adjHt = $('.current-slide').height();
-            selector.height(adjHt);
+            selector.height(adjHt).css({'position' : 'relative'});
 
             //Slide Loop
             loop();
@@ -90,8 +99,8 @@ function appear(){
 }
 
 function disappear(){
-   $('.cnt-right .cntnr-content').animate({left : '-1500'});
-   $('.cnt-left .cntnr-content').animate({right : '-1500'});
+   $('.cnt-right .cntnr-content').animate({left : '-200%'});
+   $('.cnt-left .cntnr-content').animate({right : '-200%'});
 
 }
 
@@ -103,9 +112,12 @@ function adjustHeight(){
 
 function pagerControl(){
     pager.click(function(){
+                  disappear();
                   var id =$(this).attr('href');
-                  selector.find('.slide-item').removeClass('current-slide').css({'display' : 'none'});
-                  $(id).addClass('current-slide').css({'display' : 'block'});
+                  selector.find('.slide-item').removeClass('current-slide').fadeOut();
+                  $(id).addClass('current-slide').fadeIn();
+                  adjustHeight();
+                  appear();
                   pager.removeClass('active');
                   $(this).addClass('active');
                    clearInterval(infiniteLoop);
@@ -117,37 +129,43 @@ function prevNextControl(){
         var firstSlide = $('.slide-item:first');
          activepager = $('.slidepage.active'); 
          disappear();
+         activepager.removeClass('active').next().addClass('active');
        if($('.slide-item:last').hasClass('current-slide')){
           $('.slide-item:last').removeClass('current-slide').fadeOut();
 
             firstSlide.addClass('current-slide').fadeIn();
             adjustHeight();
             appear();
-            activepager.removeClass('active').next().addClass('active');
-
-        } else {
-
+          } else {
           $('.current-slide').removeClass('current-slide').fadeOut().next().addClass('current-slide').fadeIn();
             adjustHeight();
             appear();
-            activepager.removeClass('active').next().addClass('active');
-        }
+            }
+         var ida=$('.current-slide').attr('id');
+         $('.slidepage[href*='+ ida +']').addClass('active');
+        
       clearInterval(infiniteLoop);
           return false;
       });
       $('.slide-prev').click(function(){
         var lastSlide = $('.slide-item:last');
+        activepager = $('.slidepage.active');
         disappear();
+        activepager.removeClass('active').prev().addClass('active');
           if($('.slide-item:first').hasClass('current-slide')){
             $('.slide-item:first').removeClass('current-slide').fadeOut();
             lastSlide.addClass('current-slide').fadeIn();
             adjustHeight();
             appear();
+            $('.slidepage[href*='+ ida +']').addClass('active');
           } else {
-          $('.current-slide').removeClass('current-slide').fadeOut().prev().addClass('current-slide').fadeIn();
-          adjustHeight();
+            $('.current-slide').removeClass('current-slide').fadeOut().prev().addClass('current-slide').fadeIn();
+            adjustHeight();
             appear();
-        }
+          }
+          var ida=$('.current-slide').attr('id');
+           $('.slidepage[href*='+ ida +']').addClass('active');
+          
           clearInterval(infiniteLoop);
           return false;
         });
