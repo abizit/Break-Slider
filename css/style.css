@@ -1,0 +1,7 @@
+body {margin: 0;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 14px;line-height: 20px;color: #333333;background-color: #ffffff;}
+.slide-item:before,.slide-item:after {content: " "; /* 1 */ display: table; /* 2 */}
+.slide-item:after {clear: both;}
+.slide-item{*zoom: 1;}
+.slider-wrapper{width: 800px; margin: auto;}
+.slider-wrapper .slide-item .left-container,.slider-wrapper .slide-item .right-container{float: left; width: 49%; height: 100%;}
+.slider-wrapper .slide-item .left-container{border-right: 1px solid #000;}
